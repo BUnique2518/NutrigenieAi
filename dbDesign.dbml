@@ -1,0 +1,54 @@
+Table users {
+  id               int [pk, increment]
+  email            varchar(255) [unique, not null]
+  password         varchar(255) [not null]
+  refreshToken     text
+  name             varchar(255)
+  createdAt        timestamp [default: `now()`]
+  updatedAt        timestamp [default: `now()`]
+}
+
+Table user_profiles {
+  id          int [pk, increment]
+  userId      int [not null, unique]
+  age         int
+  gender      varchar(50)
+  heightCm    int
+  weightKg    int
+  country     varchar(100)
+  state       varchar(100)
+  phone       varchar(30)
+  createdAt   timestamp [default: `now()`]
+  updatedAt   timestamp [default: `now()`]
+
+  Note: 'Stores personal information completed in onboarding step 1'
+}
+
+Table user_fitness_goals {
+  id             int [pk, increment]
+  userId         int [not null, unique] 
+  primaryGoal    varchar(100)
+  fitnessLevel   int
+  activityLevel  varchar(100)
+  dietType       varchar(100)
+  createdAt      timestamp [default: `now()`]
+  updatedAt      timestamp [default: `now()`]
+
+  Note: 'Fitness & diet goals from onboarding step 2'
+}
+
+Table user_health_profiles {
+  id             int [pk, increment]
+  userId         int [not null, unique]
+  allergies      text
+  injuries       text
+  diseases       text
+  createdAt      timestamp [default: `now()`]
+  updatedAt      timestamp [default: `now()`]
+
+  Note: 'Health profile data from onboarding step 3'
+}
+
+Ref: user_profiles.userId > users.id
+Ref: user_fitness_goals.userId > users.id
+Ref: user_health_profiles.userId > users.id

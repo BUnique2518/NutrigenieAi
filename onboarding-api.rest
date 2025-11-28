@@ -1,0 +1,35 @@
+POST http://localhost:4000/onboarding/form
+Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzYzODg3NDc4LCJleHAiOjE3NjM4ODgzNzh9.GXjne7PQgA-PSbAZWX_-XfQ0BplpJRP8CNkM_7mh87s
+Content-Type: application/json
+
+{
+  "profile": {
+    "age": 28,
+    "gender": "Male",
+    "heightCm": 178,
+    "weightKg": 85,
+    "country": "India",
+    "state": "Maharastra",
+    "phone": "9876543210"
+  },
+  "fitnessGoals": {
+    "primaryGoal": "Fat loss",
+    "fitnessLevel": 40,
+    "activityLevel": "Moderately Active",
+    "dietType": "Vegetarian"
+  },
+  "healthProfile": {
+    "allergies": "Peanuts",
+    "injuries": "lower back pain",
+    "diseases": "PCOS"
+  }
+}
+
+
+
+###
+GET http://localhost:4000/onboarding/form-data
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNzYzODg1NjE3LCJleHAiOjE3NjM4ODY1MTd9.i7AVmQioOPNHF_ctJtXqXHmWytyi9C9pE7rqWDGU3xQ
+
+
+###
