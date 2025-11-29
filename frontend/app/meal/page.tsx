@@ -34,7 +34,7 @@ export default function MealDetailPage() {
       {/* Header */}
       <header className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Meal Details</h1>
+          <h1 className="text-3xl font-bold text-black">Meal Details</h1>
           <p className="text-gray-600 mt-1">Complete guide to prepare this delicious meal</p>
         </div>
         <button className="px-4 py-2 bg-black text-white rounded-xl shadow">

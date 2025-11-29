@@ -9,31 +9,21 @@ import { dashboardService } from "@/services/dashboard";
 export default function DashboardClient() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
   const [dashboardData, setDashboardData] = useState<any>(null);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
-        setError("");
         const data = await dashboardService.getDashboardData();
         setDashboardData(data);
       } catch (err: any) {
         console.error("Failed to fetch dashboard data:", err);
 
-        // Check if it's a network error (backend not running)
-        if (err.message === "Network Error" || err.code === "ERR_NETWORK") {
-          setError("Cannot connect to server. Please make sure the backend is running on port 4000.");
-        } else if (err.response?.status === 401) {
-          setError("Session expired. Please log in again.");
-          // Redirect to login after 2 seconds
-          setTimeout(() => {
-            window.location.href = "/login";
-          }, 2000);
-        } else {
-          setError(err.response?.data?.message || "Failed to load dashboard data");
-        }
+        // Clear tokens and redirect to login immediately
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "/login";
       } finally {
         setLoading(false);
       }
@@ -48,22 +38,6 @@ export default function DashboardClient() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-green-400 mx-auto mb-4"></div>
           <p className="text-gray-400">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex h-screen bg-black text-white items-center justify-center">
-        <div className="text-center">
-          <p className="text-red-400 mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="bg-green-400 text-black px-4 py-2 rounded hover:bg-green-500"
-          >
-            Retry
-          </button>
         </div>
       </div>
     );

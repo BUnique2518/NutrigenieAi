@@ -42,7 +42,7 @@ export default function ExerciseDetailPage() {
       {/* Header */}
       <header className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Exercise Details</h1>
+          <h1 className="text-3xl font-bold text-black">Exercise Details</h1>
           <p className="text-gray-600 mt-1">Full guide to perfect your form</p>
         </div>
         <button className="px-4 py-2 bg-black text-white rounded-xl shadow">
@@ -390,78 +390,78 @@ export default function ExerciseDetailPage() {
             <div className="space-y-4">
               {/* Difficulty Dropdown */}
               {/* <div className="border-b pb-3"> */}
-                <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
-                  Intensity
-                </label>
-                <select
-                  value={difficulty}
-                  onChange={(e) => setDifficulty(e.target.value)}
-                  className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled
-                >
-                  {difficultyOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+              <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
+                Intensity
+              </label>
+              <select
+                value={difficulty}
+                onChange={(e) => setDifficulty(e.target.value)}
+                className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled
+              >
+                {difficultyOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               {/* </div> */}
 
               {/* Equipment Dropdown */}
               {/* <div className="border-b pb-3"> */}
-                <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
-                  Equipment
-                </label>
-                <select
-                  value={equipment}
-                  onChange={(e) => setEquipment(e.target.value)}
-                  className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled
-                >
-                  {equipmentOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+              <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
+                Equipment
+              </label>
+              <select
+                value={equipment}
+                onChange={(e) => setEquipment(e.target.value)}
+                className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled
+              >
+                {equipmentOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               {/* </div> */}
 
               {/* Exercise Type Dropdown */}
               {/* <div className="border-b pb-3"> */}
-                <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
-                  Exercise Type
-                </label>
-                <select
-                  value={exerciseType}
-                  onChange={(e) => setExerciseType(e.target.value)}
-                  className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled
-                >
-                  {exerciseTypeOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+              <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
+                Exercise Type
+              </label>
+              <select
+                value={exerciseType}
+                onChange={(e) => setExerciseType(e.target.value)}
+                className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled
+              >
+                {exerciseTypeOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               {/* </div> */}
 
               {/* Experience Level Dropdown */}
               {/* <div className="border-b pb-3"> */}
-                <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
-                  Experience Level
-                </label>
-                <select
-                  value={experienceLevel}
-                  onChange={(e) => setExperienceLevel(e.target.value)}
-                  className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled
-                >
-                  {experienceLevelOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+              <label className="text-xs text-gray-600 font-medium uppercase block mb-2">
+                Experience Level
+              </label>
+              <select
+                value={experienceLevel}
+                onChange={(e) => setExperienceLevel(e.target.value)}
+                className="w-full p-2 border rounded-lg text-gray-900 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500"
+                disabled
+              >
+                {experienceLevelOptions.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
               {/* </div> */}
             </div>
 
@@ -477,7 +477,7 @@ export default function ExerciseDetailPage() {
                 className="w-full h-24 p-3 border rounded-lg text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
               />
             </div> */}
-{/* 
+            {/* 
             <button className="w-full mt-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold transition">
               Generate New Exercise
             </button> */}
