@@ -22,8 +22,8 @@ export default function Sidebar({ open }: SidebarProps) {
 
   const navItems = [
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
-    { icon: Apple, label: "Nutrition", href: "/meal-planner" },
-    { icon: Activity, label: "Activity", href: "/exercise-planner" },
+    { icon: Apple, label: "Nutrition", href: "/weekly-meal-planner" },
+    { icon: Activity, label: "Activity", href: "/weekly-exercise-planner" },
     { icon: Moon, label: "Sleep", href: "/sleep" },
     { icon: ShoppingCart, label: "Nutrigenie Cart", href: "/cart" },
     { icon: Settings, label: "Settings", href: "/settings" },
