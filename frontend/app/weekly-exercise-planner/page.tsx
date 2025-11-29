@@ -15,161 +15,140 @@ type ExerciseItem = {
   muscleGroup?: string;
 };
 
+// Pool of chest exercises to randomly select from
+const chestExercisePool: ExerciseItem[] = [
+  { id: "chest-1", name: "Barbell Bench Press", duration: "15 min", sets: "4", reps: "8-10", difficulty: "Hard", muscleGroup: "Chest, Shoulders" },
+  { id: "chest-2", name: "Incline Dumbbell Press", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Hard", muscleGroup: "Chest, Front Delts" },
+  { id: "chest-3", name: "Cable Flyes", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Chest" },
+  { id: "chest-4", name: "Push-ups (Weighted)", duration: "15 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Chest, Shoulders" },
+  { id: "chest-5", name: "Machine Chest Press", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Easy", muscleGroup: "Chest" },
+  { id: "chest-6", name: "Dips", duration: "15 min", sets: "4", reps: "8-12", difficulty: "Hard", muscleGroup: "Chest, Triceps" },
+];
+
+const bicepsExercisePool: ExerciseItem[] = [
+  { id: "biceps-1", name: "Barbell Curls", duration: "15 min", sets: "4", reps: "8-10", difficulty: "Hard", muscleGroup: "Biceps" },
+  { id: "biceps-2", name: "Dumbbell Curls", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Moderate", muscleGroup: "Biceps" },
+  { id: "biceps-3", name: "Cable Curls", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Biceps" },
+  { id: "biceps-4", name: "Hammer Curls", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Moderate", muscleGroup: "Biceps, Forearms" },
+  { id: "biceps-5", name: "Machine Bicep Curl", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Easy", muscleGroup: "Biceps" },
+  { id: "biceps-6", name: "EZ Bar Curls", duration: "15 min", sets: "4", reps: "8-12", difficulty: "Hard", muscleGroup: "Biceps" },
+];
+
+const fatBurningExercisePool: ExerciseItem[] = [
+  { id: "fatburn-1", name: "Jump Rope", duration: "15 min", sets: "3", reps: "3 min each", difficulty: "Hard", muscleGroup: "Full Body" },
+  { id: "fatburn-2", name: "Burpees", duration: "12 min", sets: "3", reps: "12-15", difficulty: "Hard", muscleGroup: "Full Body" },
+  { id: "fatburn-3", name: "Mountain Climbers", duration: "10 min", sets: "3", reps: "45 sec", difficulty: "Moderate", muscleGroup: "Core, Full Body" },
+  { id: "fatburn-4", name: "High-Intensity Interval Training", duration: "20 min", sets: "4", reps: "30 sec sprint", difficulty: "Hard", muscleGroup: "Full Body, Cardio" },
+  { id: "fatburn-5", name: "Battle Ropes", duration: "12 min", sets: "3", reps: "30 sec", difficulty: "Hard", muscleGroup: "Shoulders, Core" },
+  { id: "fatburn-6", name: "Kettlebell Swings", duration: "15 min", sets: "4", reps: "15-20", difficulty: "Moderate", muscleGroup: "Full Body, Glutes" },
+];
+
+const backExercisePool: ExerciseItem[] = [
+  { id: "back-1", name: "Deadlifts", duration: "20 min", sets: "4", reps: "5-8", difficulty: "Hard", muscleGroup: "Back, Glutes" },
+  { id: "back-2", name: "Barbell Rows", duration: "18 min", sets: "4", reps: "6-8", difficulty: "Hard", muscleGroup: "Back, Biceps" },
+  { id: "back-3", name: "Pull-ups", duration: "15 min", sets: "3", reps: "8-12", difficulty: "Hard", muscleGroup: "Back, Biceps" },
+  { id: "back-4", name: "Lat Pulldowns", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Moderate", muscleGroup: "Lats, Biceps" },
+  { id: "back-5", name: "Dumbbell Rows", duration: "15 min", sets: "3", reps: "10-12", difficulty: "Moderate", muscleGroup: "Back, Biceps" },
+  { id: "back-6", name: "Machine Row", duration: "12 min", sets: "3", reps: "12-15", difficulty: "Easy", muscleGroup: "Back" },
+];
+
+const tricepsExercisePool: ExerciseItem[] = [
+  { id: "triceps-1", name: "Tricep Dips", duration: "15 min", sets: "4", reps: "8-12", difficulty: "Hard", muscleGroup: "Triceps, Chest" },
+  { id: "triceps-2", name: "Barbell Bench Dips", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Hard", muscleGroup: "Triceps" },
+  { id: "triceps-3", name: "Tricep Rope Pushdowns", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Triceps" },
+  { id: "triceps-4", name: "Overhead Tricep Extension", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Moderate", muscleGroup: "Triceps" },
+  { id: "triceps-5", name: "Close-Grip Bench Press", duration: "15 min", sets: "3", reps: "8-10", difficulty: "Hard", muscleGroup: "Triceps, Chest" },
+  { id: "triceps-6", name: "Machine Tricep Press", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Easy", muscleGroup: "Triceps" },
+];
+
+const absExercisePool: ExerciseItem[] = [
+  { id: "abs-1", name: "Barbell Ab Wheel Rollouts", duration: "15 min", sets: "3", reps: "8-12", difficulty: "Hard", muscleGroup: "Core, Abs" },
+  { id: "abs-2", name: "Hanging Leg Raises", duration: "12 min", sets: "3", reps: "10-15", difficulty: "Hard", muscleGroup: "Abs, Hip Flexors" },
+  { id: "abs-3", name: "Cable Crunches", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Abs" },
+  { id: "abs-4", name: "Decline Sit-ups", duration: "12 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Abs" },
+  { id: "abs-5", name: "Planks", duration: "15 min", sets: "3", reps: "45-60 sec", difficulty: "Moderate", muscleGroup: "Core, Abs" },
+  { id: "abs-6", name: "Machine Crunches", duration: "10 min", sets: "3", reps: "15-20", difficulty: "Easy", muscleGroup: "Abs" },
+];
+
+const legsExercisePool: ExerciseItem[] = [
+  { id: "legs-1", name: "Barbell Squats", duration: "20 min", sets: "4", reps: "6-8", difficulty: "Hard", muscleGroup: "Legs, Glutes" },
+  { id: "legs-2", name: "Leg Press", duration: "18 min", sets: "4", reps: "8-10", difficulty: "Hard", muscleGroup: "Quads, Glutes" },
+  { id: "legs-3", name: "Leg Curls", duration: "12 min", sets: "3", reps: "10-12", difficulty: "Moderate", muscleGroup: "Hamstrings" },
+  { id: "legs-4", name: "Leg Extensions", duration: "10 min", sets: "3", reps: "12-15", difficulty: "Moderate", muscleGroup: "Quads" },
+  { id: "legs-5", name: "Walking Lunges", duration: "15 min", sets: "3", reps: "12 each leg", difficulty: "Moderate", muscleGroup: "Legs, Glutes" },
+  { id: "legs-6", name: "Hack Squat", duration: "15 min", sets: "3", reps: "10-12", difficulty: "Hard", muscleGroup: "Quads, Glutes" },
+];
+
+const getRandomChestExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...chestExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+const getRandomBicepsExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...bicepsExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+const getRandomFatBurningExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...fatBurningExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+const getRandomBackExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...backExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+const getRandomTricepsExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...tricepsExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+const getRandomAbsExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...absExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
+const getRandomLegsExercises = (count: number): ExerciseItem[] => {
+  const shuffled = [...legsExercisePool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+};
+
 const sampleWeek: Record<string, ExerciseItem[]> = {
-  Monday: [
-    { 
-      id: "push-ups", 
-      name: "Push-ups", 
-      duration: "15 min", 
-      sets: "3", 
-      reps: "12-15",
-      difficulty: "Moderate",
-      muscleGroup: "Chest, Shoulders"
-    },
-    { 
-      id: "plank", 
-      name: "Plank", 
-      duration: "5 min", 
-      sets: "3", 
-      reps: "30-60s",
-      difficulty: "Easy",
-      muscleGroup: "Core"
-    },
-  ],
-  Tuesday: [
-    { 
-      id: "squats", 
-      name: "Bodyweight Squats", 
-      duration: "20 min", 
-      sets: "4", 
-      reps: "15-20",
-      difficulty: "Moderate",
-      muscleGroup: "Legs, Glutes"
-    },
-  ],
-  Wednesday: [
-    { 
-      id: "dumbbell-rows", 
-      name: "Dumbbell Rows", 
-      duration: "25 min", 
-      sets: "3", 
-      reps: "10-12",
-      difficulty: "Hard",
-      muscleGroup: "Back, Biceps"
-    },
-    { 
-      id: "jump-rope", 
-      name: "Jump Rope", 
-      duration: "10 min", 
-      note: "Cardio",
-      difficulty: "Hard",
-      muscleGroup: "Full Body"
-    },
-  ],
-  Thursday: [
-    { 
-      id: "lunges", 
-      name: "Forward Lunges", 
-      duration: "20 min", 
-      sets: "3", 
-      reps: "12 each leg",
-      difficulty: "Moderate",
-      muscleGroup: "Legs"
-    },
-  ],
-  Friday: [
-    { 
-      id: "burpees", 
-      name: "Burpees", 
-      duration: "15 min", 
-      sets: "4", 
-      reps: "8-12",
-      difficulty: "Hard",
-      muscleGroup: "Full Body"
-    },
-  ],
-  Saturday: [
-    { 
-      id: "yoga-flow", 
-      name: "Yoga Flow", 
-      duration: "30 min", 
-      note: "Flexibility & Recovery",
-      difficulty: "Easy",
-      muscleGroup: "Full Body"
-    },
-  ],
-  Sunday: [
-    { 
-      id: "rest", 
-      name: "Active Recovery", 
-      duration: "30 min", 
-      note: "Light walk / Stretching",
-      difficulty: "Easy",
-      muscleGroup: "Recovery"
-    },
-  ],
+  Monday: [],
+  Tuesday: [],
+  Wednesday: [],
+  Thursday: [],
+  Friday: [],
+  Saturday: [],
+  Sunday: [],
 };
 
-const getDifficultyBadge = (difficulty?: string) => {
-  switch (difficulty) {
-    case "Easy":
-      return { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" };
-    case "Moderate":
-      return { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" };
-    case "Hard":
-      return { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" };
-    default:
-      return { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
-  }
-};
-
-const getDayBgColor = (day: string) => {
-  const colors: Record<string, string> = {
-    Monday: "bg-blue-50",
-    Tuesday: "bg-purple-50",
-    Wednesday: "bg-pink-50",
-    Thursday: "bg-green-50",
-    Friday: "bg-orange-50",
-    Saturday: "bg-indigo-50",
-    Sunday: "bg-red-50",
-  };
-  return colors[day] || "bg-gray-50";
-};
-
-const getDayBorderColor = (day: string) => {
-  const colors: Record<string, string> = {
-    Monday: "border-blue-300 bg-blue-500/5",
-    Tuesday: "border-purple-300 bg-purple-500/5",
-    Wednesday: "border-pink-300 bg-pink-500/5",
-    Thursday: "border-green-300 bg-green-500/5",
-    Friday: "border-orange-300 bg-orange-500/5",
-    Saturday: "border-indigo-300 bg-indigo-500/5",
-    Sunday: "border-red-300 bg-red-500/5",
-  };
-  return colors[day] || "border-gray-300 bg-gray-500/5";
-};
-
-const getDayIcon = (day: string) => {
-  const icons: Record<string, string> = {
-    Monday: "🏋️",
-    Tuesday: "💪",
-    Wednesday: "🔥",
-    Thursday: "🌿",
-    Friday: "⚡",
-    Saturday: "🧘",
-    Sunday: "😌",
-  };
-  return icons[day] || "📅";
-};
+// ...existing code...
 
 export default function WeeklyPlannerPage() {
   const router = useRouter();
   const [selectedDay, setSelectedDay] = useState<string>("Monday");
   const [checkedExercises, setCheckedExercises] = useState<Set<string>>(new Set());
+  const [weeklyPlan, setWeeklyPlan] = useState<Record<string, ExerciseItem[]>>(sampleWeek);
 
+  const [isClient, setIsClient] = useState(false);
   const openExercise = (exercise: ExerciseItem) => {
     router.push(`/exercise?id=${encodeURIComponent(exercise.id)}&name=${encodeURIComponent(exercise.name)}`);
   };
+
+  React.useEffect(() => {
+    setIsClient(true);
+    setWeeklyPlan({
+      Monday: getRandomChestExercises(5),
+      Tuesday: getRandomBicepsExercises(5),
+      Wednesday: getRandomFatBurningExercises(5),
+      Thursday: getRandomBackExercises(5),
+      Friday: getRandomTricepsExercises(5),
+      Saturday: getRandomAbsExercises(5),
+      Sunday: getRandomLegsExercises(5),
+    });
+  }, []);
 
   const toggleExerciseCheck = (id: string) => {
     const newChecked = new Set(checkedExercises);
@@ -181,12 +160,35 @@ export default function WeeklyPlannerPage() {
     setCheckedExercises(newChecked);
   };
 
-  const totalMinutes = Object.values(sampleWeek).flat().reduce((sum, ex) => {
+  const regeneratePlan = () => {
+    const updatedPlan = { ...weeklyPlan };
+    
+    if (selectedDay === "Monday") {
+      updatedPlan[selectedDay] = getRandomChestExercises(5);
+    } else if (selectedDay === "Tuesday") {
+      updatedPlan[selectedDay] = getRandomBicepsExercises(5);
+    } else if (selectedDay === "Wednesday") {
+      updatedPlan[selectedDay] = getRandomFatBurningExercises(5);
+    } else if (selectedDay === "Thursday") {
+      updatedPlan[selectedDay] = getRandomBackExercises(5);
+    } else if (selectedDay === "Friday") {
+      updatedPlan[selectedDay] = getRandomTricepsExercises(5);
+    } else if (selectedDay === "Saturday") {
+      updatedPlan[selectedDay] = getRandomAbsExercises(5);
+    } else if (selectedDay === "Sunday") {
+      updatedPlan[selectedDay] = getRandomLegsExercises(5);
+    }
+    
+    setWeeklyPlan(updatedPlan);
+    setCheckedExercises(new Set());
+  };
+
+  const totalMinutes = Object.values(weeklyPlan).flat().reduce((sum, ex) => {
     const mins = parseInt(ex.duration);
     return sum + mins;
   }, 0);
 
-  const totalExercises = Object.values(sampleWeek).flat().length;
+  const totalExercises = Object.values(weeklyPlan).flat().length;
   const completedToday = checkedExercises.size;
 
   return (
@@ -201,10 +203,6 @@ export default function WeeklyPlannerPage() {
             </h1>
             <p className="text-gray-600 text-lg">Achieve your goals, one day at a time</p>
           </div>
-          {/* <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition transform font-semibold flex items-center justify-center gap-2 w-full md:w-auto">
-            <Plus size={20} />
-            Add Workout
-          </button> */}
         </div>
 
         {/* Stats */}
@@ -267,7 +265,7 @@ export default function WeeklyPlannerPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">This Week's Schedule</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(sampleWeek).map(([day, exercises]) => (
+            {Object.entries(weeklyPlan).map(([day, exercises]) => (
               <button
                 key={day}
                 onClick={() => setSelectedDay(day)}
@@ -323,7 +321,7 @@ export default function WeeklyPlannerPage() {
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">{selectedDay}</h3>
                   <p className="text-sm text-gray-600">
-                    {sampleWeek[selectedDay].length} exercises • {sampleWeek[selectedDay].reduce((sum, ex) => sum + parseInt(ex.duration), 0)}m
+                    {weeklyPlan[selectedDay].length} exercises • {weeklyPlan[selectedDay].reduce((sum, ex) => sum + parseInt(ex.duration), 0)}m
                   </p>
                 </div>
               </div>
@@ -331,7 +329,7 @@ export default function WeeklyPlannerPage() {
 
             {/* Exercises List */}
             <div className="p-6 space-y-3 max-h-96 overflow-y-auto">
-              {sampleWeek[selectedDay].map((exercise, idx) => (
+              {weeklyPlan[selectedDay].map((exercise, idx) => (
                 <div
                   key={exercise.id}
                   className="group p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition cursor-pointer"
@@ -384,11 +382,7 @@ export default function WeeklyPlannerPage() {
 
             {/* Footer */}
             <div className="p-6 border-t border-gray-200 space-y-3">
-              {/* <button className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:shadow-lg transition flex items-center justify-center gap-2">
-                <Flame size={18} />
-                Start Workout
-              </button> */}
-              <button className="w-full py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition flex items-center justify-center gap-2">
+              <button onClick={regeneratePlan} className="w-full py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition flex items-center justify-center gap-2">
                 <Edit2 size={18} />
                 Regenerate Today's Plan
               </button>
@@ -420,3 +414,55 @@ export default function WeeklyPlannerPage() {
     </div>
   );
 }
+
+const getDifficultyBadge = (difficulty?: string) => {
+  switch (difficulty) {
+    case "Easy":
+      return { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" };
+    case "Moderate":
+      return { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" };
+    case "Hard":
+      return { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" };
+    default:
+      return { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
+  }
+};
+
+const getDayBgColor = (day: string) => {
+  const colors: Record<string, string> = {
+    Monday: "bg-blue-50",
+    Tuesday: "bg-purple-50",
+    Wednesday: "bg-pink-50",
+    Thursday: "bg-green-50",
+    Friday: "bg-orange-50",
+    Saturday: "bg-indigo-50",
+    Sunday: "bg-red-50",
+  };
+  return colors[day] || "bg-gray-50";
+};
+
+const getDayBorderColor = (day: string) => {
+  const colors: Record<string, string> = {
+    Monday: "border-blue-300 bg-blue-500/5",
+    Tuesday: "border-purple-300 bg-purple-500/5",
+    Wednesday: "border-pink-300 bg-pink-500/5",
+    Thursday: "border-green-300 bg-green-500/5",
+    Friday: "border-orange-300 bg-orange-500/5",
+    Saturday: "border-indigo-300 bg-indigo-500/5",
+    Sunday: "border-red-300 bg-red-500/5",
+  };
+  return colors[day] || "border-gray-300 bg-gray-500/5";
+};
+
+const getDayIcon = (day: string) => {
+  const icons: Record<string, string> = {
+    Monday: "🏋️",
+    Tuesday: "💪",
+    Wednesday: "🔥",
+    Thursday: "🌿",
+    Friday: "⚡",
+    Saturday: "🧘",
+    Sunday: "😌",
+  };
+  return icons[day] || "📅";
+};
