@@ -75,7 +75,7 @@ export default function ExercisePlannerUI() {
   const handleGenerateWorkout = () => {
     // Validate that at least one goal is entered
     const hasValidGoal = goals.some((goal) => goal.trim() !== "");
-    
+
     if (!hasValidGoal) {
       alert("Please enter at least one fitness goal");
       return;
@@ -97,7 +97,7 @@ export default function ExercisePlannerUI() {
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col gap-8 font-sans">
       {/* Header */}
       <header className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Custom Exercise Planner</h1>
+        <h1 className="text-3xl font-bold text-black">Custom Exercise Planner</h1>
         <button className="px-4 py-2 bg-black text-white rounded-xl shadow">
           Login
         </button>
