@@ -545,7 +545,6 @@ export default function MealDetailPage() {
     <div className="min-h-screen bg-gray-100 p-10 flex flex-col gap-8 font-sans">
       {/* Header */}
       <header className="flex justify-between items-center">
-<<<<<<< HEAD
         <div className="flex items-center gap-4">
           <button
             onClick={() => router.back()}
@@ -557,11 +556,6 @@ export default function MealDetailPage() {
             <h1 className="text-3xl font-bold">Meal Details</h1>
             <p className="text-gray-600 mt-1">Complete guide to prepare this delicious meal</p>
           </div>
-=======
-        <div>
-          <h1 className="text-3xl font-bold text-black">Meal Details</h1>
-          <p className="text-gray-600 mt-1">Complete guide to prepare this delicious meal</p>
->>>>>>> refs/remotes/origin/main
         </div>
         <button
           onClick={() => router.back()}
