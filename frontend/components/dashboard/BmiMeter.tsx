@@ -4,13 +4,14 @@
 interface BmiMeterProps {
   value: number;
   status: string;
+  bodyFat?: number;
 }
 
 // Helper function to get dynamic styles based on BMI value
 const getBmiDetails = (value: number) => {
   if (value < 18.5) {
     return {
-      color: "text-blue-400", 
+      color: "text-blue-400",
       percent: 25,
     };
   }
@@ -22,17 +23,17 @@ const getBmiDetails = (value: number) => {
   }
   if (value < 30) {
     return {
-      color: "text-yellow-400", 
+      color: "text-yellow-400",
       percent: 75,
     };
   }
   return {
-    color: "text-red-400", 
+    color: "text-red-400",
     percent: 100,
   };
 };
 
-export default function BmiMeter({ value, status }: BmiMeterProps) {
+export default function BmiMeter({ value, status, bodyFat }: BmiMeterProps) {
   // Get dynamic color and percent from the helper function
   const { color, percent } = getBmiDetails(value);
 
@@ -52,7 +53,7 @@ export default function BmiMeter({ value, status }: BmiMeterProps) {
           {/* Background Ring */}
           <svg className="w-full h-full absolute" viewBox="0 0 100 100">
             <circle
-              className="text-white/10" 
+              className="text-white/10"
               strokeWidth="10"
               cx="50"
               cy="50"
@@ -76,10 +77,15 @@ export default function BmiMeter({ value, status }: BmiMeterProps) {
           </svg>
           {/* Text Inside */}
           <div className="flex flex-col items-center justify-center">
-            <p className={`text-5xl font-bold ${color}`}>{value}</p> 
+            <p className={`text-5l font-bold ${color}`}>{value}</p>
             <p className="text-slate-400 text-sm mt-1">{status}</p>
           </div>
         </div>
+        {bodyFat !== undefined && (
+          <p className="text-slate-400 text-sm mt-4 font-bold">
+            Body Fat: <span className="text-green-400 font-semibold">{bodyFat}%</span>
+          </p>
+        )}
       </div>
     </div>
   );
