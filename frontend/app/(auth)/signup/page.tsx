@@ -22,7 +22,7 @@ export default function SignupPage() {
     setError("");
     try {
       await authService.register({ email, password });
-      router.push("/login"); // Redirect to login after successful registration
+      router.push("/onboarding"); 
     } catch (err: any) {
       setError(err.response?.data?.message || "Registration failed. Please try again.");
     }
