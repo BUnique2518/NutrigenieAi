@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Edit2, ChevronRight, Calendar, Clock, Flame, CheckCircle, UtensilsCrossed } from "lucide-react";
 
@@ -14,6 +14,281 @@ type MealItem = {
   note?: string;
   difficulty?: "Easy" | "Moderate" | "Hard";
   cuisine?: string;
+};
+
+const mealsDatabase: MealItem[] = [
+  {
+    id: "meal-1",
+    name: "Oatmeal with Berries",
+    type: "Breakfast",
+    calories: "350",
+    prepTime: "10 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Continental",
+  },
+  {
+    id: "meal-2",
+    name: "Scrambled Eggs & Toast",
+    type: "Breakfast",
+    calories: "340",
+    prepTime: "10 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Continental",
+  },
+  {
+    id: "meal-3",
+    name: "Greek Yogurt & Granola",
+    type: "Breakfast",
+    calories: "300",
+    prepTime: "5 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Continental",
+  },
+  {
+    id: "meal-4",
+    name: "Protein Smoothie Bowl",
+    type: "Breakfast",
+    calories: "380",
+    prepTime: "8 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "American",
+  },
+  {
+    id: "meal-5",
+    name: "Whole Wheat Pancakes",
+    type: "Breakfast",
+    calories: "420",
+    prepTime: "15 min",
+    servings: "2",
+    difficulty: "Moderate",
+    cuisine: "American",
+  },
+  {
+    id: "meal-6",
+    name: "Avocado Toast",
+    type: "Breakfast",
+    calories: "360",
+    prepTime: "10 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "American",
+  },
+  {
+    id: "meal-7",
+    name: "French Toast",
+    type: "Breakfast",
+    calories: "400",
+    prepTime: "15 min",
+    servings: "2",
+    difficulty: "Easy",
+    cuisine: "American",
+  },
+  {
+    id: "meal-8",
+    name: "Grilled Chicken Salad",
+    type: "Lunch",
+    calories: "450",
+    prepTime: "20 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Mediterranean",
+  },
+  {
+    id: "meal-9",
+    name: "Tandoori Chicken Rice",
+    type: "Lunch",
+    calories: "520",
+    prepTime: "30 min",
+    servings: "1",
+    difficulty: "Moderate",
+    cuisine: "Indian",
+  },
+  {
+    id: "meal-10",
+    name: "Buddha Bowl",
+    type: "Lunch",
+    calories: "480",
+    prepTime: "20 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Fusion",
+  },
+  {
+    id: "meal-11",
+    name: "Taco Bowl",
+    type: "Lunch",
+    calories: "510",
+    prepTime: "25 min",
+    servings: "1",
+    difficulty: "Moderate",
+    cuisine: "Mexican",
+  },
+  {
+    id: "meal-12",
+    name: "Sushi Rolls",
+    type: "Lunch",
+    calories: "480",
+    prepTime: "30 min",
+    servings: "1",
+    difficulty: "Hard",
+    cuisine: "Japanese",
+  },
+  {
+    id: "meal-13",
+    name: "Caesar Wrap",
+    type: "Lunch",
+    calories: "420",
+    prepTime: "12 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "American",
+  },
+  {
+    id: "meal-14",
+    name: "Pasta Marinara",
+    type: "Dinner",
+    calories: "550",
+    prepTime: "25 min",
+    servings: "2",
+    difficulty: "Moderate",
+    cuisine: "Italian",
+  },
+  {
+    id: "meal-15",
+    name: "Grilled Salmon with Veggies",
+    type: "Dinner",
+    calories: "580",
+    prepTime: "35 min",
+    servings: "1",
+    difficulty: "Moderate",
+    cuisine: "Nordic",
+  },
+  {
+    id: "meal-16",
+    name: "Vegetable Stir Fry",
+    type: "Dinner",
+    calories: "420",
+    prepTime: "25 min",
+    servings: "2",
+    difficulty: "Easy",
+    cuisine: "Asian",
+  },
+  {
+    id: "meal-17",
+    name: "Butter Chicken",
+    type: "Dinner",
+    calories: "620",
+    prepTime: "40 min",
+    servings: "2",
+    difficulty: "Hard",
+    cuisine: "Indian",
+  },
+  {
+    id: "meal-18",
+    name: "Grilled Steak & Sweet Potato Fries",
+    type: "Dinner",
+    calories: "650",
+    prepTime: "35 min",
+    servings: "1",
+    difficulty: "Moderate",
+    cuisine: "American",
+  },
+  {
+    id: "meal-19",
+    name: "Pasta Carbonara",
+    type: "Dinner",
+    calories: "610",
+    prepTime: "20 min",
+    servings: "2",
+    difficulty: "Moderate",
+    cuisine: "Italian",
+  },
+  {
+    id: "meal-20",
+    name: "Biryani",
+    type: "Dinner",
+    calories: "580",
+    prepTime: "45 min",
+    servings: "2",
+    difficulty: "Hard",
+    cuisine: "Indian",
+  },
+  {
+    id: "meal-21",
+    name: "Homemade Pizza",
+    type: "Lunch",
+    calories: "520",
+    prepTime: "40 min",
+    servings: "2",
+    difficulty: "Moderate",
+    cuisine: "Italian",
+  },
+  {
+    id: "meal-22",
+    name: "Roasted Vegetables & Tofu",
+    type: "Dinner",
+    calories: "420",
+    prepTime: "30 min",
+    servings: "2",
+    difficulty: "Easy",
+    cuisine: "Vegan",
+  },
+  {
+    id: "meal-23",
+    name: "Protein Bars",
+    type: "Snack",
+    calories: "200",
+    prepTime: "0 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "American",
+  },
+  {
+    id: "meal-24",
+    name: "Mixed Nuts & Fruits",
+    type: "Snack",
+    calories: "250",
+    prepTime: "5 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Continental",
+  },
+  {
+    id: "meal-25",
+    name: "Hummus & Veggies",
+    type: "Snack",
+    calories: "180",
+    prepTime: "5 min",
+    servings: "1",
+    difficulty: "Easy",
+    cuisine: "Mediterranean",
+  },
+];
+
+export const getRandomMealsByType = (type: "Breakfast" | "Lunch" | "Dinner" | "Snack", count: number): MealItem[] => {
+  const filteredMeals = mealsDatabase.filter((meal) => meal.type === type);
+  const shuffled = [...filteredMeals].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(count, filteredMeals.length));
+};
+
+export const generateWeeklyMealPlan = (): Record<string, MealItem[]> => {
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  const weeklyPlan: Record<string, MealItem[]> = {};
+
+  days.forEach((day) => {
+    const breakfast = getRandomMealsByType("Breakfast", 1);
+    const lunch = getRandomMealsByType("Lunch", 1);
+    const dinner = getRandomMealsByType("Dinner", 1);
+    const snack = getRandomMealsByType("Snack", Math.random() > 0.5 ? 1 : 0);
+
+    weeklyPlan[day] = [...breakfast, ...lunch, ...dinner, ...snack];
+  });
+
+  return weeklyPlan;
 };
 
 const sampleWeek: Record<string, MealItem[]> = {
@@ -243,77 +518,88 @@ const sampleWeek: Record<string, MealItem[]> = {
   ],
 };
 
-const getDifficultyBadge = (difficulty?: string) => {
-  switch (difficulty) {
-    case "Easy":
-      return { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" };
-    case "Moderate":
-      return { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" };
-    case "Hard":
-      return { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" };
-    default:
-      return { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
-  }
-};
+// const getDifficultyBadge = (difficulty?: string) => {
+//   switch (difficulty) {
+//     case "Easy":
+//       return { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" };
+//     case "Moderate":
+//       return { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" };
+//     case "Hard":
+//       return { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" };
+//     default:
+//       return { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
+//   }
+// };
 
-const getMealTypeColor = (type: string) => {
-  switch (type) {
-    case "Breakfast":
-      return "bg-yellow-100 text-yellow-700";
-    case "Lunch":
-      return "bg-blue-100 text-blue-700";
-    case "Dinner":
-      return "bg-purple-100 text-purple-700";
-    case "Snack":
-      return "bg-orange-100 text-orange-700";
-    default:
-      return "bg-gray-100 text-gray-700";
-  }
-};
+// const getMealTypeColor = (type: string) => {
+//   switch (type) {
+//     case "Breakfast":
+//       return "bg-yellow-100 text-yellow-700";
+//     case "Lunch":
+//       return "bg-blue-100 text-blue-700";
+//     case "Dinner":
+//       return "bg-purple-100 text-purple-700";
+//     case "Snack":
+//       return "bg-orange-100 text-orange-700";
+//     default:
+//       return "bg-gray-100 text-gray-700";
+//   }
+// };
 
-const getDayBgColor = (day: string) => {
-  const colors: Record<string, string> = {
-    Monday: "bg-blue-50",
-    Tuesday: "bg-purple-50",
-    Wednesday: "bg-pink-50",
-    Thursday: "bg-green-50",
-    Friday: "bg-orange-50",
-    Saturday: "bg-indigo-50",
-    Sunday: "bg-red-50",
-  };
-  return colors[day] || "bg-gray-50";
-};
+// const getDayBgColor = (day: string) => {
+//   const colors: Record<string, string> = {
+//     Monday: "bg-blue-50",
+//     Tuesday: "bg-purple-50",
+//     Wednesday: "bg-pink-50",
+//     Thursday: "bg-green-50",
+//     Friday: "bg-orange-50",
+//     Saturday: "bg-indigo-50",
+//     Sunday: "bg-red-50",
+//   };
+//   return colors[day] || "bg-gray-50";
+// };
 
-const getDayBorderColor = (day: string) => {
-  const colors: Record<string, string> = {
-    Monday: "border-blue-300 bg-blue-500/5",
-    Tuesday: "border-purple-300 bg-purple-500/5",
-    Wednesday: "border-pink-300 bg-pink-500/5",
-    Thursday: "border-green-300 bg-green-500/5",
-    Friday: "border-orange-300 bg-orange-500/5",
-    Saturday: "border-indigo-300 bg-indigo-500/5",
-    Sunday: "border-red-300 bg-red-500/5",
-  };
-  return colors[day] || "border-gray-300 bg-gray-500/5";
-};
+// const getDayBorderColor = (day: string) => {
+//   const colors: Record<string, string> = {
+//     Monday: "border-blue-300 bg-blue-500/5",
+//     Tuesday: "border-purple-300 bg-purple-500/5",
+//     Wednesday: "border-pink-300 bg-pink-500/5",
+//     Thursday: "border-green-300 bg-green-500/5",
+//     Friday: "border-orange-300 bg-orange-500/5",
+//     Saturday: "border-indigo-300 bg-indigo-500/5",
+//     Sunday: "border-red-300 bg-red-500/5",
+//   };
+//   return colors[day] || "border-gray-300 bg-gray-500/5";
+// };
 
-const getDayIcon = (day: string) => {
-  const icons: Record<string, string> = {
-    Monday: "🥗",
-    Tuesday: "🍛",
-    Wednesday: "🥘",
-    Thursday: "🍖",
-    Friday: "🍱",
-    Saturday: "🍕",
-    Sunday: "🥞",
-  };
-  return icons[day] || "🍽️";
-};
+// const getDayIcon = (day: string) => {
+//   const icons: Record<string, string> = {
+//     Monday: "🥗",
+//     Tuesday: "🍛",
+//     Wednesday: "🥘",
+//     Thursday: "🍖",
+//     Friday: "🍱",
+//     Saturday: "🍕",
+//     Sunday: "🥞",
+//   };
+//   return icons[day] || "🍽️";
+// };
 
 export default function WeeklyMealPlannerPage() {
   const router = useRouter();
   const [selectedDay, setSelectedDay] = useState<string>("Monday");
   const [checkedMeals, setCheckedMeals] = useState<Set<string>>(new Set());
+  const [weeklyPlan, setWeeklyPlan] = useState<Record<string, MealItem[]>>({});
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    setWeeklyPlan(generateWeeklyMealPlan());
+  }, []);
+
+  if (!isClient || Object.keys(weeklyPlan).length === 0) {
+    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  }
 
   const openMeal = (meal: MealItem) => {
     router.push(`/meal?id=${encodeURIComponent(meal.id)}&name=${encodeURIComponent(meal.name)}`);
@@ -329,13 +615,19 @@ export default function WeeklyMealPlannerPage() {
     setCheckedMeals(newChecked);
   };
 
-  const totalCalories = Object.values(sampleWeek).flat().reduce((sum, meal) => {
-    const cals = parseInt(meal.calories);
-    return sum + cals;
-  }, 0);
+  const totalCalories = Object.values(weeklyPlan)
+    .flat()
+    .reduce((sum, meal) => sum + parseInt(meal.calories), 0);
 
-  const totalMeals = Object.values(sampleWeek).flat().length;
+  const totalMeals = Object.values(weeklyPlan).flat().length;
   const completedToday = checkedMeals.size;
+
+  const regenerateMealPlan = () => {
+    setWeeklyPlan(generateWeeklyMealPlan());
+    setCheckedMeals(new Set());
+  };
+
+  // ...existing getDifficultyBadge, getMealTypeColor, getDayBgColor functions...
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 p-6 md:p-10 font-sans">
@@ -411,7 +703,7 @@ export default function WeeklyMealPlannerPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-4">This Week's Menu</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {Object.entries(sampleWeek).map(([day, meals]) => (
+            {Object.entries(weeklyPlan).map(([day, meals]) => (
               <button
                 key={day}
                 onClick={() => setSelectedDay(day)}
@@ -437,7 +729,7 @@ export default function WeeklyMealPlannerPage() {
                       <p className="font-semibold text-gray-800 group-hover:text-green-600 transition">
                         {meal.name}
                       </p>
-                      <p className="text-xs text-gray-500">{meal.calories}</p>
+                      <p className="text-xs text-gray-500">{meal.calories} cal</p>
                     </div>
                   ))}
                   {meals.length > 2 && (
@@ -467,7 +759,7 @@ export default function WeeklyMealPlannerPage() {
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">{selectedDay}</h3>
                   <p className="text-sm text-gray-600">
-                    {sampleWeek[selectedDay].length} meals • {sampleWeek[selectedDay].reduce((sum, meal) => sum + parseInt(meal.calories), 0)} cal
+                    {weeklyPlan[selectedDay]?.length || 0} meals • {weeklyPlan[selectedDay]?.reduce((sum, meal) => sum + parseInt(meal.calories), 0) || 0} cal
                   </p>
                 </div>
               </div>
@@ -475,7 +767,7 @@ export default function WeeklyMealPlannerPage() {
 
             {/* Meals List */}
             <div className="p-6 space-y-3 max-h-96 overflow-y-auto">
-              {sampleWeek[selectedDay].map((meal, idx) => (
+              {(weeklyPlan[selectedDay] || []).map((meal) => (
                 <div
                   key={meal.id}
                   className="group p-4 rounded-xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 transition cursor-pointer"
@@ -510,16 +802,16 @@ export default function WeeklyMealPlannerPage() {
                         <span className={`text-xs px-2 py-1 rounded-full font-semibold ${getMealTypeColor(meal.type)}`}>
                           {meal.type}
                         </span>
-                        <span className={`text-xs px-2 py-1 rounded-full font-semibold border ${getDifficultyBadge(meal.difficulty).bg} ${getDifficultyBadge(meal.difficulty).text} ${getDifficultyBadge(meal.difficulty).border} border`}>
+                        <span className={`text-xs px-2 py-1 rounded-full font-semibold border ${getDifficultyBadge(meal.difficulty).bg} ${getDifficultyBadge(meal.difficulty).text} ${getDifficultyBadge(meal.difficulty).border}`}>
                           {meal.difficulty}
                         </span>
                       </div>
                       {meal.prepTime && (
                         <p className="text-xs text-gray-600 mt-2">
-                          <span className="font-semibold">⏱️ {meal.prepTime}</span> • <span className="font-semibold">🍽️ {meal.servings} serving{meal.servings !== "1" ? "s" : ""}</span>
+                          <span className="font-semibold">⏱️ {meal.prepTime}</span> • <span className="font-semibold">🍽️ {meal.servings}</span>
                         </p>
                       )}
-                      <p className="text-xs text-orange-600 font-semibold mt-1">🔥 {meal.calories}</p>
+                      <p className="text-xs text-orange-600 font-semibold mt-1">🔥 {meal.calories} cal</p>
                     </div>
                     <ChevronRight className="text-gray-400 group-hover:text-green-600 transition mt-1" size={18} />
                   </div>
@@ -529,9 +821,12 @@ export default function WeeklyMealPlannerPage() {
 
             {/* Footer */}
             <div className="p-6 border-t border-gray-200 space-y-3">
-              <button className="w-full py-2 bg-gray-100 text-gray-700 rounded-xl font-semibold hover:bg-gray-200 transition flex items-center justify-center gap-2">
+              <button
+                onClick={regenerateMealPlan}
+                className="w-full py-2 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition flex items-center justify-center gap-2"
+              >
                 <Edit2 size={18} />
-                Generate Meal Plan
+                Generate New Plan
               </button>
             </div>
           </div>
@@ -561,3 +856,70 @@ export default function WeeklyMealPlannerPage() {
     </div>
   );
 }
+
+const getDifficultyBadge = (difficulty?: string) => {
+  switch (difficulty) {
+    case "Easy":
+      return { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" };
+    case "Moderate":
+      return { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" };
+    case "Hard":
+      return { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" };
+    default:
+      return { bg: "bg-gray-50", text: "text-gray-700", border: "border-gray-200" };
+  }
+};
+
+const getMealTypeColor = (type: string) => {
+  switch (type) {
+    case "Breakfast":
+      return "bg-yellow-100 text-yellow-700";
+    case "Lunch":
+      return "bg-blue-100 text-blue-700";
+    case "Dinner":
+      return "bg-purple-100 text-purple-700";
+    case "Snack":
+      return "bg-orange-100 text-orange-700";
+    default:
+      return "bg-gray-100 text-gray-700";
+  }
+};
+
+const getDayBgColor = (day: string) => {
+  const colors: Record<string, string> = {
+    Monday: "bg-blue-50",
+    Tuesday: "bg-purple-50",
+    Wednesday: "bg-pink-50",
+    Thursday: "bg-green-50",
+    Friday: "bg-orange-50",
+    Saturday: "bg-indigo-50",
+    Sunday: "bg-red-50",
+  };
+  return colors[day] || "bg-gray-50";
+};
+
+const getDayBorderColor = (day: string) => {
+  const colors: Record<string, string> = {
+    Monday: "border-blue-300 bg-blue-500/5",
+    Tuesday: "border-purple-300 bg-purple-500/5",
+    Wednesday: "border-pink-300 bg-pink-500/5",
+    Thursday: "border-green-300 bg-green-500/5",
+    Friday: "border-orange-300 bg-orange-500/5",
+    Saturday: "border-indigo-300 bg-indigo-500/5",
+    Sunday: "border-red-300 bg-red-500/5",
+  };
+  return colors[day] || "border-gray-300 bg-gray-500/5";
+};
+
+const getDayIcon = (day: string) => {
+  const icons: Record<string, string> = {
+    Monday: "🥗",
+    Tuesday: "🍛",
+    Wednesday: "🥘",
+    Thursday: "🍖",
+    Friday: "🍱",
+    Saturday: "🍕",
+    Sunday: "🥞",
+  };
+  return icons[day] || "🍽️";
+};
