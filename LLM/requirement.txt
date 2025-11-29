@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+langchain
+langgraph
+openai
+llama-index
+sentence-transformers
+qdrant-client
+pydantic
+python-dotenv
+requests
+numpy
+pandas
+tqdm
+transformers
+accelerate
+bitsandbytes
